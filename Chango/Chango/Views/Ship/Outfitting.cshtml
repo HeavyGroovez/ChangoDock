@@ -1,0 +1,244 @@
+﻿@using Chango.Models;
+@using Chango.Helpers;
+@model OutfittingViewModel
+
+<!-- Contains ship attributes for use by CalculateMetrics functions in Chango.js-->
+<div data-buildname='@Model.ShipBuild.Name'
+     data-buildid='@Model.ShipBuild.ID'
+     data-shipname='@Model.Ship.Name'
+     data-shiphullmass=@Model.Ship.Mass
+     data-shipbaseshields=@Model.Ship.Shields
+     data-shipbasearmour=@Model.Ship.Armour
+     data-hullprice=@Model.Ship.HullPrice
+     data-shipbaseboost='@Model.Ship.Boost'
+     data-shipbasespeed='@Model.Ship.Speed'
+     id="OutfittingTitle">@Model.Ship.Name</div>
+
+<!-- Ship Attributes Container-->
+<div class="shipAttributesContainer standardMargin">
+    
+    <!-- Ship Attributes Header 1 Container -->
+    <div class="shipAttributesHeader1Container">
+        <div class="shipAttribHeaderText shipHeaderJump">JUMP RANGE</div>
+        <div class="shipAttribHeaderText shipHeaderRange">TOTAL RANGE</div>
+    </div>
+
+    <!-- Ship Attributes Header 2 Container -->
+    <div class="shipAttributesHeader2Container">
+        <div class="shipAttribHeaderText shipAttribSize">SIZE</div>
+        <div class="shipAttribHeaderText shipAttribAgility">AGILITY</div>
+        <div class="shipAttribHeaderText shipAttribSpeed">SPEED</div>
+        <div class="shipAttribHeaderText shipAttribBoost">BOOST</div>
+        <div class="shipAttribHeaderText shipAttribArmour">ARMOUR</div>
+        <div class="shipAttribHeaderText shipAttribShields">SHIELDS</div>
+        <div class="shipAttribHeaderText shipAttribHullMass">MASS</div>
+        <div class="shipAttribHeaderText shipAttribHullMassUnladen">UNLADEN</div>
+        <div class="shipAttribHeaderText shipAttribHullMassLaden">LADEN</div>
+        <div class="shipAttribHeaderText shipAttribCargo">CARGO</div>
+        <div class="shipAttribHeaderText shipAttribFuel">FUEL</div>
+        <div class="shipAttribHeaderText shipAttribJumpRangeMax">MAX</div>
+        <div class="shipAttribHeaderText shipAttribJumpRangeFullTank">FULL TANK</div>
+        <div class="shipAttribHeaderText shipAttribJumpRangeLaden">LADEN </div>
+        <div class="shipAttribHeaderText shipAttribTotalRangeJumps">JUMPS</div>
+        <div class="shipAttribHeaderText shipAttribTotalRangeUnladen">UNLADEN</div>
+        <div class="shipAttribHeaderText shipAttribTotalRangeLaden">LADEN</div>
+        <div class="shipAttribHeaderText">MASS LOCK</div>
+    </div>
+
+    <!-- Ship Attributes Detail Container-->
+    <div class="shipAttributesDetailContainer">
+        <div class="shipAttribContainer">
+            @{
+                string size="";
+                string agilityRatingStyle = "";
+                switch (Model.Ship.Size)
+                { 
+                    case 1:
+                        size="Small";
+                        break;
+                    case 2: 
+                        size="Medium";
+                        break;
+                    case 3:
+                        size = "Large";
+                        break;
+                }
+                agilityRatingStyle = "shipAttribAgilityGraphic moduleRatingGraphic" + @Model.Ship.Agility.ToString();
+            }
+            <div class="shipAttribText shipAttribSize">@size</div>
+        </div>
+        <div class="shipAttribContainer"><div class='@agilityRatingStyle'></div></div>
+        <div class="shipAttribContainer shipAttribSpeed"><div id ="ShipNonBoostSpeed" class="shipAttribText">@Model.Ship.Speed M/S</div></div>
+        <div class="shipAttribContainer shipAttribBoost"><div id="ShipBoostSpeed" class="shipAttribText" >@Model.Ship.Boost M/S</div></div>
+        <div class="shipAttribContainer shipAttribArmour"><div id="ShipArmourStrength" class="shipAttribText">@Model.Ship.Armour</div></div>
+        <div class="shipAttribContainer shipAttribShields"><div id="ShipShieldStrength" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribHullMass"><div class="shipAttribText">@Model.Ship.Mass T</div></div>
+        <div class="shipAttribContainer shipAttribHullMassUnladen"><div id="ShipMassUnladen" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribHullMassLaden"><div id="ShipMassLaden" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribCargo"><div id="ShipCargoMass" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribFuel"><div id="ShipFuelMass" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribJumpRangeMax"><div id="ShipJumpRangeMax" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribJumpRangeFullTank"><div id="ShipJumpRangeFullTank" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribJumpRangeLaden"><div id="ShipJumpRangeLaden" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribTotalRangeJumps"><div id="ShipTotalRangeJumps" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribTotalRangeUnladen"><div id="ShipTotalRangeUnladen" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribTotalRangeLaden"><div id="ShipTotalRangeLaden" class="shipAttribText"></div></div>
+        <div class="shipAttribContainer shipAttribMassLock"><div id="ShipMassLock" class="shipAttribText"></div>@Model.Ship.MassLock</div>
+    </div>
+</div>
+
+<!-- Ship sections container-->
+<div class="shipSectionsContainer standardMargin"> 
+
+    <div class="shipSectionHeaderContainer"><div class="shipSectionHeaderText">STANDARD</div></div> <!-- Standard Section Header-->
+    <div class="shipSectionHeaderContainer"><div class="shipSectionHeaderText">INTERNAL COMPARTMENTS</div></div> <!-- Internal Section Header-->
+    <div class="shipSectionHeaderContainer"><div class="shipSectionHeaderText">HARDPOINTS</div></div> <!-- Hardpoint Section Header-->
+    <div class="shipSectionHeaderContainer"><div class="shipSectionHeaderText">UTILITIES</div></div> <!-- Utility Section Header-->
+    
+    @{
+        //  Enumerate module sections (Standard, Internal, Hardpoint, Utility)
+        List<ShipModuleConfiguration> modules = Model.DefaultModuleConfiguration;
+        ShipModuleBuild smb;
+        Module mod;
+        string moduleID;
+        string moduleClassID;
+        string moduleContainerStyle;
+
+        foreach (string section in Model.Sections)
+        {
+            string shipContainerStyle="shipSectionContainer shipSection" + section;
+            bool powerStatus = true;
+                     
+            <!-- Ship section container-->
+            <div class='@shipContainerStyle'> 
+            @{
+                    
+                // Get the modules for this section
+                List<ShipModuleConfiguration> sectionModules = modules.Where(dm => dm.Section == section)
+                                                                                .OrderBy(dm => dm.OrderID)
+                                                                                .ToList<ShipModuleConfiguration>();
+                // Enumerate default config module bays
+                foreach (ShipModuleConfiguration config in sectionModules)
+                {
+                    // Get the module for the current bay
+                    mod = Model.GetModule(config.ID);
+
+                    // Get the ship module build power status for this bay
+                    smb = Model.GetModuleBuild(config.ID);
+                    powerStatus = smb.PowerStatus;
+                    
+                    // Override the default container height for power distributor and weapon bays
+                    if (config.OrderID == (int)StandardModule.PowerDistributor && section == "Standard")
+                    {
+                        moduleContainerStyle = "moduleContainer moduleLarge";
+                    }
+                    else if (config.Section == "Hardpoint")
+                    {
+                        moduleContainerStyle = "moduleContainer moduleMedium";
+                    }
+                    else
+                    {
+                        moduleContainerStyle = "moduleContainer";
+                    }
+
+                    string sectionAttrib = section; // @section is reserved Razor syntax
+                    moduleID = "ModuleContainer" + config.ID.ToString();
+                    moduleClassID = "ModuleClass" + config.ID.ToString();
+                    
+                    // Attributes required by AJAX call to Ship.ModuleSelectorGroup
+                    // string shipName,string sectionName, int moduleClass, string moduleType, int shipMass
+                    
+                    <!-- Module Container -->                    
+                    <div id=@moduleID data-ship='@Model.Ship.Name'
+                                      data-configid=@config.ID
+                                      data-moduleclass=@config.Class
+                                      data-section='@sectionAttrib'
+                                      data-moduletype='@mod.Type'
+                                      data-powerstatus='@smb.PowerStatus'
+                                      class='@moduleContainerStyle'> 
+                        @{
+                            // Attributes required by _Module partial view render
+                            mod.SelectorConfigID = @config.ID;
+                            mod.SelectorModuleClass = @config.Class;
+                            mod.SelectorSection = @sectionAttrib;
+                            mod.SelectorShipName = @Model.Ship.Name;
+                            mod.SelectorPowerStatus = @smb.PowerStatus;
+                            Html.RenderPartial("_Module", mod); 
+                        }
+                    </div> <!-- End of module container-->
+                } // End of ship section enum 
+                
+                // Power Metrics
+                if (section == "Utility")
+                {
+                          
+                     <!-- Rebuy Metrics-->
+                    <div class="priceMetricsContainer standardBorder"> 
+
+                        <!-- Left and right empty cells -->
+                        <div class="priceMetricsLeftCell"><div class="priceMetricsLeftCellText"></div></div>
+                        <div class="priceMetricsRightCell"></div>
+                        
+                        <!-- Total Cost -->
+                        <div class="smallMargin"> 
+                            <span class="priceMetricsTotalLabel">Total Cost:</span>
+                            <span id="PriceMetricsTotalText" class="priceMetricsTotalText"></span>
+                        </div>
+                        
+                        <!-- Rebuy Cost-->    
+                        <div class="smallMargin"> 
+                            <span class="priceMetricsRebuyLabel">Rebuy Cost:</span>
+                            <span id="PriceMetricsRebuyText" class="priceMetricsRebuyText"></span>
+                        </div>
+
+                    </div>         
+                
+                    <!-- Power Metrics-->
+                    <div class="powerMetricsContainer standardBorder"> 
+
+                        <!-- Left and right empty cells -->
+                        <div class="powerMetricsLeftCell"><div class="powerMetricsLeftCellText"></div></div>
+                        <div class="powerMetricsRightCell"></div>
+                        
+                        <!-- Total Power-->
+                        <div class="smallMargin"> 
+                            <span class="powerMetricsTotalLabel">Total Power:</span>
+                            <span id="PowerMetricsTotalText" class="powerMetricsTotalText"></span>
+                        </div>
+                        
+                        <!-- Consumed Power-->    
+                        <div class="smallMargin"> 
+                            <span class="powerMetricsConsumedLabel">Consumed Power:</span>
+                            <span id="PowerMetricsConsumedText" class="powerMetricsConsumedText"></span>
+                        </div>
+
+                        <!-- Available Power-->   
+                        <div class="smallMargin"> 
+                            <span class="powerMetricsAvailableLabel">Available Power:</span>
+                            <span id="PowerMetricsAvailableText" class="powerMetricsAvailableText"></span>
+                        </div>
+
+                    </div>
+                }
+            }
+            </div> <!-- End of ship section container-->
+        }  // End of ship sections enum-->
+    }
+</div> <!-- End of ship sections container-->
+
+<script>
+    $(function () {
+        bindEventHandlers();
+        loadSettings();
+        calculatePowerMetrics();
+        calculateShieldMetrics();
+        calculateMassMetrics();
+        calculateJumpMetrics();
+        calculatePriceMetrics();
+        calculateArmourMetrics();
+        calculateSpeedMetrics();
+    });
+</script>
+
+ 
+    

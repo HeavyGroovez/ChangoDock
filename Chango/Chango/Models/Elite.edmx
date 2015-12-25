@@ -1,0 +1,574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Commander">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AutoLogin" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="SiriusDiscount" Type="bit" Nullable="false" />
+          <Property Name="ShowModulePrices" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipSpecific" Type="varchar" MaxLength="50" />
+          <Property Name="Section" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="varchar" MaxLength="1" />
+          <Property Name="M" Type="float" />
+          <Property Name="P" Type="float" />
+          <Property Name="Attributes" Type="varchar" MaxLength="250" />
+          <Property Name="FuelMultiplier" Type="float" />
+          <Property Name="FuelPower" Type="float" />
+          <Property Name="MaxFuel" Type="float" />
+          <Property Name="Mass" Type="float" />
+          <Property Name="Power" Type="float" />
+          <Property Name="Boost" Type="int" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Damage" Type="int" />
+          <Property Name="DamagePerSecond" Type="int" />
+          <Property Name="ThermalLoad" Type="int" />
+          <Property Name="WeaponMount" Type="varchar" MaxLength="1" />
+          <Property Name="WeaponType" Type="varchar" MaxLength="5" />
+          <Property Name="RateOfFire" Type="float" />
+          <Property Name="Penetration" Type="varchar" MaxLength="1" />
+          <Property Name="Ammo" Type="varchar" MaxLength="50" />
+          <Property Name="MinMass" Type="float" />
+          <Property Name="OptimalMass" Type="int" />
+          <Property Name="MaxMass" Type="int" />
+          <Property Name="MinMultiplier" Type="float" />
+          <Property Name="OptMultiplier" Type="float" />
+          <Property Name="MaxMultiplier" Type="float" />
+          <Property Name="Armour" Type="int" />
+          <Property Name="ScoopRate" Type="float" />
+        </EntityType>
+        <EntityType Name="Ship">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Manufacturer" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Size" Type="int" Nullable="false" />
+          <Property Name="Speed" Type="int" Nullable="false" />
+          <Property Name="Boost" Type="int" Nullable="false" />
+          <Property Name="Agility" Type="int" Nullable="false" />
+          <Property Name="Shields" Type="int" Nullable="false" />
+          <Property Name="Armour" Type="int" Nullable="false" />
+          <Property Name="Mass" Type="int" Nullable="false" />
+          <Property Name="MassLock" Type="int" />
+          <Property Name="HullPrice" Type="int" />
+        </EntityType>
+        <EntityType Name="ShipBuild">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CommanderName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ShipName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShipModuleBuild">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipBuildID" Type="int" Nullable="false" />
+          <Property Name="ShipModuleConfigurationID" Type="int" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="PowerStatus" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShipModuleConfiguration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Section" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="50" />
+          <Property Name="Class" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ShipBuild_Commander">
+          <End Role="Commander" Type="Self.Commander" Multiplicity="1" />
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commander">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipBuild">
+              <PropertyRef Name="CommanderName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipBuild_Ship">
+          <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipBuild">
+              <PropertyRef Name="ShipName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_ShipBuild">
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipBuild">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ShipBuildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_ShipModuleConfiguration">
+          <End Role="ShipModuleConfiguration" Type="Self.ShipModuleConfiguration" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipModuleConfiguration">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ShipModuleConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleConfiguration_Ship">
+          <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+          <End Role="ShipModuleConfiguration" Type="Self.ShipModuleConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipModuleConfiguration">
+              <PropertyRef Name="ShipName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SelectShipBuilds" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ShipName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelsStoreContainer">
+          <EntitySet Name="Commander" EntityType="Self.Commander" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ship" EntityType="Self.Ship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipBuild" EntityType="Self.ShipBuild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipModuleBuild" EntityType="Self.ShipModuleBuild" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShipModuleConfiguration" EntityType="Self.ShipModuleConfiguration" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ShipBuild_Commander" Association="Self.FK_ShipBuild_Commander">
+            <End Role="Commander" EntitySet="Commander" />
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipBuild_Ship" Association="Self.FK_ShipBuild_Ship">
+            <End Role="Ship" EntitySet="Ship" />
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_Module" Association="Self.FK_ShipModuleBuild_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_ShipBuild" Association="Self.FK_ShipModuleBuild_ShipBuild">
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_ShipModuleConfiguration" Association="Self.FK_ShipModuleBuild_ShipModuleConfiguration">
+            <End Role="ShipModuleConfiguration" EntitySet="ShipModuleConfiguration" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleConfiguration_Ship" Association="Self.FK_ShipModuleConfiguration_Ship">
+            <End Role="Ship" EntitySet="Ship" />
+            <End Role="ShipModuleConfiguration" EntitySet="ShipModuleConfiguration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Commander">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AutoLogin" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SiriusDiscount" Type="Boolean" Nullable="false" />
+          <Property Name="ShowModulePrices" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ShipBuild" Relationship="Self.FK_ShipBuild_Commander" FromRole="Commander" ToRole="ShipBuild" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipSpecific" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Attributes" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="FuelMultiplier" Type="Double" />
+          <Property Name="FuelPower" Type="Double" />
+          <Property Name="MaxFuel" Type="Double" />
+          <Property Name="Mass" Type="Double" />
+          <Property Name="Power" Type="Double" />
+          <Property Name="Boost" Type="Int32" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Damage" Type="Int32" />
+          <Property Name="DamagePerSecond" Type="Int32" />
+          <Property Name="ThermalLoad" Type="Int32" />
+          <Property Name="WeaponMount" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="WeaponType" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="RateOfFire" Type="Double" />
+          <Property Name="Penetration" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Ammo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MinMass" Type="Double" />
+          <Property Name="OptimalMass" Type="Int32" />
+          <Property Name="MaxMass" Type="Int32" />
+          <Property Name="MinMultiplier" Type="Double" />
+          <Property Name="OptMultiplier" Type="Double" />
+          <Property Name="MaxMultiplier" Type="Double" />
+          <Property Name="Armour" Type="Int32" />
+          <Property Name="ScoopRate" Type="Double" />
+          <NavigationProperty Name="ShipModuleBuild" Relationship="Self.FK_ShipModuleBuild_Module" FromRole="Module" ToRole="ShipModuleBuild" />
+          <Property Name="M" Type="Double" />
+          <Property Name="P" Type="Double" />
+        </EntityType>
+        <EntityType Name="Ship">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Size" Type="Int32" Nullable="false" />
+          <Property Name="Speed" Type="Int32" Nullable="false" />
+          <Property Name="Boost" Type="Int32" Nullable="false" />
+          <Property Name="Agility" Type="Int32" Nullable="false" />
+          <Property Name="Shields" Type="Int32" Nullable="false" />
+          <Property Name="Armour" Type="Int32" Nullable="false" />
+          <Property Name="Mass" Type="Int32" Nullable="false" />
+          <Property Name="MassLock" Type="Int32" />
+          <Property Name="HullPrice" Type="Int32" />
+          <NavigationProperty Name="ShipBuild" Relationship="Self.FK_ShipBuild_Ship" FromRole="Ship" ToRole="ShipBuild" />
+          <NavigationProperty Name="ShipModuleConfiguration" Relationship="Self.FK_ShipModuleConfiguration_Ship" FromRole="Ship" ToRole="ShipModuleConfiguration" />
+        </EntityType>
+        <EntityType Name="ShipBuild">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CommanderName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShipName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Commander" Relationship="Self.FK_ShipBuild_Commander" FromRole="ShipBuild" ToRole="Commander" />
+          <NavigationProperty Name="Ship" Relationship="Self.FK_ShipBuild_Ship" FromRole="ShipBuild" ToRole="Ship" />
+          <NavigationProperty Name="ShipModuleBuild" Relationship="Self.FK_ShipModuleBuild_ShipBuild" FromRole="ShipBuild" ToRole="ShipModuleBuild" />
+        </EntityType>
+        <EntityType Name="ShipModuleBuild">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipBuildID" Type="Int32" Nullable="false" />
+          <Property Name="ShipModuleConfigurationID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="PowerStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_ShipModuleBuild_Module" FromRole="ShipModuleBuild" ToRole="Module" />
+          <NavigationProperty Name="ShipBuild" Relationship="Self.FK_ShipModuleBuild_ShipBuild" FromRole="ShipModuleBuild" ToRole="ShipBuild" />
+          <NavigationProperty Name="ShipModuleConfiguration" Relationship="Self.FK_ShipModuleBuild_ShipModuleConfiguration" FromRole="ShipModuleBuild" ToRole="ShipModuleConfiguration" />
+        </EntityType>
+        <EntityType Name="ShipModuleConfiguration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Section" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Ship" Relationship="Self.FK_ShipModuleConfiguration_Ship" FromRole="ShipModuleConfiguration" ToRole="Ship" />
+          <NavigationProperty Name="ShipModuleBuild" Relationship="Self.FK_ShipModuleBuild_ShipModuleConfiguration" FromRole="ShipModuleConfiguration" ToRole="ShipModuleBuild" />
+        </EntityType>
+        <Association Name="FK_ShipBuild_Commander">
+          <End Role="Commander" Type="Self.Commander" Multiplicity="1" />
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commander">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipBuild">
+              <PropertyRef Name="CommanderName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_Module">
+          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ModuleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipBuild_Ship">
+          <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipBuild">
+              <PropertyRef Name="ShipName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleConfiguration_Ship">
+          <End Role="Ship" Type="Self.Ship" Multiplicity="1" />
+          <End Role="ShipModuleConfiguration" Type="Self.ShipModuleConfiguration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ship">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="ShipModuleConfiguration">
+              <PropertyRef Name="ShipName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_ShipBuild">
+          <End Role="ShipBuild" Type="Self.ShipBuild" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipBuild">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ShipBuildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShipModuleBuild_ShipModuleConfiguration">
+          <End Role="ShipModuleConfiguration" Type="Self.ShipModuleConfiguration" Multiplicity="1" />
+          <End Role="ShipModuleBuild" Type="Self.ShipModuleBuild" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipModuleConfiguration">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ShipModuleBuild">
+              <PropertyRef Name="ShipModuleConfigurationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Commander" EntityType="Self.Commander" />
+          <EntitySet Name="Module" EntityType="Self.Module" />
+          <EntitySet Name="Ship" EntityType="Self.Ship" />
+          <EntitySet Name="ShipBuild" EntityType="Self.ShipBuild" />
+          <EntitySet Name="ShipModuleBuild" EntityType="Self.ShipModuleBuild" />
+          <EntitySet Name="ShipModuleConfiguration" EntityType="Self.ShipModuleConfiguration" />
+          <AssociationSet Name="FK_ShipBuild_Commander" Association="Self.FK_ShipBuild_Commander">
+            <End Role="Commander" EntitySet="Commander" />
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_Module" Association="Self.FK_ShipModuleBuild_Module">
+            <End Role="Module" EntitySet="Module" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipBuild_Ship" Association="Self.FK_ShipBuild_Ship">
+            <End Role="Ship" EntitySet="Ship" />
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleConfiguration_Ship" Association="Self.FK_ShipModuleConfiguration_Ship">
+            <End Role="Ship" EntitySet="Ship" />
+            <End Role="ShipModuleConfiguration" EntitySet="ShipModuleConfiguration" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_ShipBuild" Association="Self.FK_ShipModuleBuild_ShipBuild">
+            <End Role="ShipBuild" EntitySet="ShipBuild" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShipModuleBuild_ShipModuleConfiguration" Association="Self.FK_ShipModuleBuild_ShipModuleConfiguration">
+            <End Role="ShipModuleConfiguration" EntitySet="ShipModuleConfiguration" />
+            <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
+          </AssociationSet>
+          <FunctionImport Name="SelectShipBuilds" ReturnType="Collection(Models.SelectShipBuilds_Result)">
+          <Parameter Name="ShipName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SelectShipBuilds_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="CommanderName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ShipName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Commander">
+            <EntityTypeMapping TypeName="Models.Commander">
+              <MappingFragment StoreEntitySet="Commander">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="AutoLogin" ColumnName="AutoLogin" />
+                <ScalarProperty Name="SiriusDiscount" ColumnName="SiriusDiscount" />
+                <ScalarProperty Name="ShowModulePrices" ColumnName="ShowModulePrices" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Module">
+            <EntityTypeMapping TypeName="Models.Module">
+              <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="P" ColumnName="P" />
+                <ScalarProperty Name="M" ColumnName="M" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShipSpecific" ColumnName="ShipSpecific" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Attributes" ColumnName="Attributes" />
+                <ScalarProperty Name="FuelMultiplier" ColumnName="FuelMultiplier" />
+                <ScalarProperty Name="FuelPower" ColumnName="FuelPower" />
+                <ScalarProperty Name="MaxFuel" ColumnName="MaxFuel" />
+                <ScalarProperty Name="Mass" ColumnName="Mass" />
+                <ScalarProperty Name="Power" ColumnName="Power" />
+                <ScalarProperty Name="Boost" ColumnName="Boost" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Damage" ColumnName="Damage" />
+                <ScalarProperty Name="DamagePerSecond" ColumnName="DamagePerSecond" />
+                <ScalarProperty Name="ThermalLoad" ColumnName="ThermalLoad" />
+                <ScalarProperty Name="WeaponMount" ColumnName="WeaponMount" />
+                <ScalarProperty Name="WeaponType" ColumnName="WeaponType" />
+                <ScalarProperty Name="RateOfFire" ColumnName="RateOfFire" />
+                <ScalarProperty Name="Penetration" ColumnName="Penetration" />
+                <ScalarProperty Name="Ammo" ColumnName="Ammo" />
+                <ScalarProperty Name="MinMass" ColumnName="MinMass" />
+                <ScalarProperty Name="OptimalMass" ColumnName="OptimalMass" />
+                <ScalarProperty Name="MaxMass" ColumnName="MaxMass" />
+                <ScalarProperty Name="MinMultiplier" ColumnName="MinMultiplier" />
+                <ScalarProperty Name="OptMultiplier" ColumnName="OptMultiplier" />
+                <ScalarProperty Name="MaxMultiplier" ColumnName="MaxMultiplier" />
+                <ScalarProperty Name="Armour" ColumnName="Armour" />
+                <ScalarProperty Name="ScoopRate" ColumnName="ScoopRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ship">
+            <EntityTypeMapping TypeName="Models.Ship">
+              <MappingFragment StoreEntitySet="Ship">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Speed" ColumnName="Speed" />
+                <ScalarProperty Name="Boost" ColumnName="Boost" />
+                <ScalarProperty Name="Agility" ColumnName="Agility" />
+                <ScalarProperty Name="Shields" ColumnName="Shields" />
+                <ScalarProperty Name="Armour" ColumnName="Armour" />
+                <ScalarProperty Name="Mass" ColumnName="Mass" />
+                <ScalarProperty Name="MassLock" ColumnName="MassLock" />
+                <ScalarProperty Name="HullPrice" ColumnName="HullPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipBuild">
+            <EntityTypeMapping TypeName="Models.ShipBuild">
+              <MappingFragment StoreEntitySet="ShipBuild">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CommanderName" ColumnName="CommanderName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipModuleBuild">
+            <EntityTypeMapping TypeName="Models.ShipModuleBuild">
+              <MappingFragment StoreEntitySet="ShipModuleBuild">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShipBuildID" ColumnName="ShipBuildID" />
+                <ScalarProperty Name="ShipModuleConfigurationID" ColumnName="ShipModuleConfigurationID" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="PowerStatus" ColumnName="PowerStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShipModuleConfiguration">
+            <EntityTypeMapping TypeName="Models.ShipModuleConfiguration">
+              <MappingFragment StoreEntitySet="ShipModuleConfiguration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SelectShipBuilds" FunctionName="Models.Store.SelectShipBuilds">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Models.SelectShipBuilds_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="CommanderName" ColumnName="CommanderName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

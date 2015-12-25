@@ -1,0 +1,41 @@
+﻿@model  IEnumerable<Chango.Models.Ship>
+
+<div id="ShipContainer">
+
+    @foreach (var item in Model)
+    {
+
+        int itemPrice = item.Price;
+        string itemName = item.Name;
+        string itemManufaturer = item.Manufacturer;
+        string manufacturerStyle = "manufacturer" + itemManufaturer.Replace(" ", "") + " manufacturerAvatar";
+        string shipStyle = "ship" + itemName.Replace(" ", "") + " ship3DModel";
+        string shipSelectorStyle = "shipSelector standardMargin";
+
+            <!-- Ship selector -->
+        <div class='@shipSelectorStyle' onclick="location.href='@Url.Action("Outfitting", "Ship", new { name = item.Name, build = "Default" })'">
+            <!-- Ship name and price -->
+            <div class="shipName shipSelectorDiv standardMargin">
+                @Html.ActionLink(itemName.ToUpper(), "Outfitting", "Ship", new { name = item.Name, build = "Default" }, new { @class = "shipLink" })
+                <span class="shipPrice">@itemPrice.ToString("N0")</span>
+            </div>
+            <div class="selectorGraphicContainer standardMargin">
+                <!-- Manufacturer avatar -->
+                <div class='@manufacturerStyle' onclick="location.href='@Url.Action("Outfitting", "Ship", new { name = item.Name, build = "Default" })'"></div>
+                <!-- Ship -->
+                <div class='@shipStyle' onclick="location.href='@Url.Action("Outfitting", "Ship", new { name = item.Name , build = "Default" })'"></div>
+            </div>
+        </div>
+
+    }
+
+</div>
+<script>
+    $(function () {
+        bindSettingsEventHandlers();
+        bindMouseEventHandlers();
+        bindBodyEventHandlers();
+        bindHangerEventHandlers();
+        loadSettings();
+    });
+</script>

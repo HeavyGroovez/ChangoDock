@@ -1,0 +1,23 @@
+﻿@model HangarViewModel
+
+@{
+    string currentShip = "";
+    foreach (ShipBuild shipBuild in Model.ShipBuilds)
+    {
+        if (shipBuild.ShipName != currentShip)
+        {
+            // Ship build(s) heading
+            <div class="hangarShipContainer">
+               <span class="hangarShipHeadingText">@shipBuild.ShipName.ToUpper()</span>
+            </div>
+            currentShip = shipBuild.ShipName;
+        }
+
+        // Ship build
+        <div class="hangarShipContainer">
+            @Html.ActionLink(shipBuild.Name, "Outfitting", "Ship", new { name = shipBuild.ShipName, build = shipBuild.Name }, new { @class = "hangarShipItem hangarShipItemText" })
+        </div>
+
+    } // End of ship build enum
+
+}

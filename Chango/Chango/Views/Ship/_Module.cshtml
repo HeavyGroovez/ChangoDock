@@ -1,0 +1,246 @@
+﻿@using Chango.Models;
+@using Chango.Helpers;
+@model Module
+@{
+    
+    string moduleClassContainerStyle="";
+    string moduleAttributeStyle="";
+    string modulePowerContainerStyle="";
+
+    Module mod = Model;
+
+    string moduleID = "ModuleContainer" + mod.SelectorConfigID;
+    string moduleClassID = "ModuleClass" + mod.SelectorConfigID;
+    string moduleMassID = "ModuleMass" + mod.SelectorConfigID;
+    string moduleDescriptionID = "ModuleDescription" + mod.SelectorConfigID + "_" + mod.ID;
+
+    // Override the default container height for power distributor bay because of the large attributes
+    if (mod.Type == "Power Distributor")
+    {
+        moduleAttributeStyle = "moduleAttributeTextBlock";
+        moduleClassContainerStyle = "moduleClassContainer moduleLarge";
+        modulePowerContainerStyle = "modulePowerContainer moduleLarge";
+    }
+    else if (mod.SelectorSection == "Hardpoint")
+    {
+        moduleAttributeStyle = "moduleAttributeTextInline";
+        moduleClassContainerStyle = "moduleClassContainer moduleMedium";
+        modulePowerContainerStyle = "modulePowerContainer moduleMedium";
+    }
+    else
+    {
+        moduleAttributeStyle = "moduleAttributeTextInline";
+        moduleClassContainerStyle = "moduleClassContainer moduleStandard";
+        modulePowerContainerStyle = "modulePowerContainer moduleStandard";
+    }
+  
+    <!-- Module Class Container-->
+    <div id='@moduleClassID' class='@moduleClassContainerStyle'>
+
+        <!-- Module Bay Class -->
+        <div class='moduleClassText'>@Render.GetModuleBayClass(mod.SelectorSection, mod.SelectorModuleClass)</div>
+
+    </div> <!-- End of Module Class Container-->
+ 
+    
+    <!-- Module Description Container-->
+    <div id='@moduleDescriptionID'
+         data-configid=@mod.SelectorConfigID
+         data-moduleid=@mod.ID
+         data-price=@mod.Price
+         data-armour='@mod.Armour'
+         data-attributes='@mod.Attributes'
+         class="moduleDescriptionContainer">
+
+        @{
+            string moduleDescription = mod.GetRenderDescription();
+            string moduleDescriptionStyle = "";
+            if (moduleDescription == "Empty")
+            {
+                if (mod.Section == "Hardpoint")
+                {
+                    moduleDescriptionStyle = "moduleEmptyLarge";
+                }
+                else
+                {
+                    moduleDescriptionStyle = "moduleEmpty";
+                }
+
+                moduleDescription = moduleDescription.ToUpper();
+            }
+        }
+
+        <!-- Module Description + Mount Graphic -->
+        <div class='@moduleDescriptionStyle'>
+            @moduleDescription
+            @{
+                if (mod.GetRenderDescription() != "Empty" && mod.Section == "Hardpoint")
+                {
+                    // Weapon mount graphic
+                    string weaponMountStyle = "weaponMount weaponMount" + mod.WeaponMount;
+                    <div class='@weaponMountStyle'></div>
+                }
+            }
+        </div>
+
+        <!-- Attributes -->
+        <div>
+            @{
+
+                // Weapon Modules
+                if (mod.Section == "Hardpoint")
+                {
+                    string moduleAttributeRatingStyle = "";
+
+                    if (mod.Damage != null)
+                    {
+                        moduleAttributeRatingStyle = "moduleRatingGraphic moduleRatingGraphic" + mod.Damage.ToString();
+                        <div class="moduleWeaponGraphicalAttribute">Damage:</div>
+                        <div class='@moduleAttributeRatingStyle'></div>
+                    }
+                    // DPS
+                    if (mod.DamagePerSecond != null)
+                    {
+                        moduleAttributeRatingStyle = "moduleRatingGraphic moduleRatingGraphic" + mod.DamagePerSecond.ToString();
+                        <div class="moduleWeaponGraphicalAttribute">DPS:</div>
+                        <div class='@moduleAttributeRatingStyle'></div>
+                    }
+                    // T-Load
+                    if (mod.ThermalLoad != null)
+                    {
+                        moduleAttributeRatingStyle = "moduleRatingGraphic moduleRatingGraphic" + mod.ThermalLoad.ToString();
+                        <div class="moduleWeaponGraphicalAttribute">T-Load:</div>
+                        <div class='@moduleAttributeRatingStyle'></div>
+                    }
+                    // Type
+                    if (mod.WeaponType != null)
+                    {
+                        <div class="moduleAttributeTextInline">Type: @mod.WeaponType</div>
+                    }
+                    // ROF
+                    if (mod.RateOfFire != null)
+                    {
+                        <div class="moduleAttributeTextInline">ROF: @mod.RateOfFire.ToString()</div>
+                    }
+                    // Pen
+                    if (mod.Penetration != null)
+                    {
+                        <div class="moduleAttributeTextInline">Pen: @mod.Penetration</div>
+                    }
+                    // Ammo
+                    if (mod.Ammo != null)
+                    {
+                        <div class="moduleAttributeTextInline">Ammo: @mod.Ammo</div>
+                    }
+                }
+                // Standard,Internal and Utility Modules
+                else
+                {
+                    List<String> attribs = mod.GetRenderAttributes();
+                    foreach (string attrib in attribs)
+                    {
+                        if (attrib.Contains("Power:"))
+                        {
+                            <div id="Power" data-power=@mod.Power class=@moduleAttributeStyle>@attrib</div>
+                        }
+                        else
+                        {
+                            <div class=@moduleAttributeStyle>@attrib</div>
+                        }
+                    }
+                }
+            }
+        </div> <!-- End of Attributes -->
+        <!-- Module Mass-->
+        <div class="moduleMassTextBlock"><span id=@moduleMassID data-moduletype='@mod.Type' data-mass=@mod.Mass class="moduleMassTextBlockSpan">@mod.GetRenderMass()</span></div>
+
+    </div> <!-- End of Module Description container-->
+
+    <!-- Module Power Container-->
+    <div id="ModulePowerContainer" class="@modulePowerContainerStyle">
+        @{
+            string modulePowerCheckboxID = "ModulePowerCheckbox" + mod.SelectorConfigID;
+            string modulePowerTextID = "ModulePowerText" + mod.SelectorConfigID;
+
+            // Render for modules that draw power - exclude Power Plant
+            if (mod.Type != "Bulkheads" && mod.Type != "Power Plant" && mod.Power > 0)
+            {
+
+                <div class="modulePowerCheckboxContainer topMarginSmall">
+                    @{
+                if (mod.SelectorPowerStatus)
+                {
+                    <input id='@modulePowerCheckboxID' class="modulePowerCheckbox" type="checkbox" checked="checked" />
+                }
+                else
+                {
+                    <input id='@modulePowerCheckboxID' class="modulePowerCheckbox" type="checkbox" />
+                }
+                    }
+                </div>
+
+                // Shield generator element needs to store all the attributes required to calculate final shield strength
+                if (mod.Type == "Shield Generator" || mod.Type == "Prismatic Shield Generator" || mod.Type == "Bi-Weave Shield Generator")
+                {
+                    <div class="modulePowerText">
+                        <span id=@modulePowerTextID
+                              data-configid=@mod.SelectorConfigID
+                              data-optmass=@mod.OptimalMass
+                              data-minmass=@mod.MinMass
+                              data-maxmass=@mod.MaxMass
+                              data-maxmultiplier=@mod.MaxMultiplier
+                              data-minmultiplier=@mod.MinMultiplier
+                              data-optmultiplier=@mod.OptMultiplier>@mod.Power</span>
+                        </div>
+                }
+
+                // Shield Booster element needs to store all the attributes required to calculate total base shield boost
+                else if (mod.Type == "Shield Booster")
+                {
+                    <div class="modulePowerText">
+                        <span data-booster=@mod.Boost data-configid=@mod.SelectorConfigID id=@modulePowerTextID>@mod.Power</span>
+                    </div>
+                }
+
+                // Frame Shift Drive element needs to store all the attributes required to calculate jump ranges
+                else if (mod.Type == "Frame Shift Drive")
+                {
+                    <div class="modulePowerText">
+                        <span id=@modulePowerTextID
+                              data-maxfuel=@mod.MaxFuel
+                              data-optimalmass=@mod.OptimalMass
+                              data-fuelpower=@mod.FuelPower
+                              data-fuelmultiplier=@mod.FuelMultiplier
+                              data-configid=@mod.SelectorConfigID>@mod.Power</span>
+                        </div>
+                }
+
+                 // Thrusters element needs to store all the attributes required to calculate speeds
+                else if (mod.Type == "Thrusters")
+                {
+                    <div class="modulePowerText">
+                        <span id=@modulePowerTextID
+                              data-optmass='@mod.OptimalMass'
+                              data-minmass='@mod.MinMass'
+                              data-maxmass='@mod.MaxMass'
+                              data-m=@mod.M
+                              data-p=@mod.P
+                              data-configid=@mod.SelectorConfigID>@mod.Power</span>
+                        </div>
+                }
+
+                else
+                {
+                    <div class="modulePowerText">
+                        <span data-configid=@mod.SelectorConfigID id=@modulePowerTextID>@mod.Power</span>
+                    </div>
+                }
+            }
+
+        }
+    </div> <!-- End of module Power container-->
+    
+    <script>
+        bindPowerCheckboxEventHandlers();
+    </script>
+}

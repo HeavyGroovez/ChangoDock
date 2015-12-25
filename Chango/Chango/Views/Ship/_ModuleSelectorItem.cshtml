@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Module>
+@using Chango.Helpers
+
+@{
+    string moduleTypeGraphicStyle = "moduleSelectorTypeGraphic " + Css.GetModuleTypeSelectorStyle(@ViewBag.ModuleType) + " topMargin";
+    bool bulkheads = false;
+    bool standard = false;
+    bool weapon = false;
+    
+    <div class="@moduleTypeGraphicStyle"></div>
+    <div class="moduleSelectorItemHeading">@ViewBag.ModuleType</div>
+
+    foreach (Module mod in Model)
+    {
+        string moduleSelectorItemContainerStyle;
+        string moduleSelectorWeaponContainerStyle;
+        string moduleDescription = mod.Class + mod.Rating;
+        string weaponMountGraphicID = "WeaponMount" + mod.ID.ToString();
+        string weaponSelectorID = "ModuleSelectorWeaponContainer" + mod.ID.ToString();
+        string onClick = "displayModuleID(" + mod.ID + ")";
+
+        if (mod.Section == "Hardpoint")
+        {
+            weapon = true;
+            
+            // Powerplay item ?
+            if (mod.Name != null)
+            {
+                moduleSelectorWeaponContainerStyle = "moduleSelectorWeaponContainer moduleSelectorPowerplayWeaponContainer";
+                moduleDescription += " " + mod.Name;
+            }
+            else
+            {
+                moduleSelectorWeaponContainerStyle = "moduleSelectorWeaponContainer";
+            }
+
+            string containerID = "ModuleContainer";
+
+            // Weapon mount graphic
+            string weaponMountStyle = "weaponMount weaponMount" + mod.WeaponMount + " topMarginSmall";
+            <div id='@weaponSelectorID' data-price=@mod.Price data-containerid=@containerID data-moduleid='@mod.ID.ToString()' class='@moduleSelectorWeaponContainerStyle'>
+                <div id='@weaponMountGraphicID' data-weaponmount="@mod.WeaponMount" class='@weaponMountStyle'></div>
+                <div class="moduleSelectorItemText">
+                    <span>@moduleDescription</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            standard = true;
+            
+            // Bulkheads
+            if (mod.Type == "Bulkheads")
+            {
+                bulkheads = true;
+                moduleSelectorItemContainerStyle = "moduleSelectorBulkheadsContainer";
+                moduleDescription = mod.Attributes;
+            }
+            else
+            {
+                // Exploration Scanner
+                if (mod.Type == "Exploration Scanner")
+                {
+                    moduleSelectorItemContainerStyle = "moduleSelectorExplorationScannerContainer";
+                    moduleDescription = mod.Name;
+                }
+                else
+                {
+                    moduleSelectorItemContainerStyle = "moduleSelectorItemContainer";
+                }
+            }
+
+            string containerID = "ModuleContainer";
+
+            string moduleSelectorID = "ModuleSelectorItemContainer" + mod.ID.ToString();
+            <div  id='@moduleSelectorID'  data-price=@mod.Price data-containerid=@containerID data-moduleid='@mod.ID.ToString()' class='@moduleSelectorItemContainerStyle'>
+                <div class="moduleSelectorItemText">
+                    <span>@moduleDescription</span>
+                </div>
+            </div>
+        }
+
+    } // End of module enum
+    if (ViewBag.ShowModulePrices)
+    {
+        string modulePriceContainerStyle = "modulePriceContainer";
+        if (bulkheads)
+        {
+            modulePriceContainerStyle += " modulePriceContainerBulkheads";
+        }
+        else if (standard)
+        {
+            modulePriceContainerStyle += " modulePriceContainerStandard";
+        }
+        else if (weapon)
+        {
+            modulePriceContainerStyle += " modulePriceContainerWeapon";
+        }
+        <div id='ModulePriceContainer' class='@modulePriceContainerStyle'>
+            <div class="moduleSelectorItemText">
+                <label class="modulePriceLabel" id="ModulePriceLabel"></label>
+            </div>
+        </div>
+    }
+}
+<script>
+    bindModuleSelectorItemEventHandlers();
+    bindModuleSelectorWeaponEventHandlers();
+</script>

@@ -1,0 +1,1113 @@
+﻿/* FRAMEWORK */
+@siteBlue: rgb(51, 122, 183);
+@siteSilver: silver;
+@siteShipyardFocus:white;
+@siteGreen: rgba(134, 204, 106, 1);
+@transitionTime: 0.1s;
+
+/* Mixin */
+.transition (@prop: all, @time: 0s, @ease: linear) {
+	-webkit-transition: @prop @time @ease;
+	-moz-transition: @prop @time @ease;
+	-o-transition: @prop @time @ease;
+	transition: @prop @time @ease;
+}
+
+#Result {
+    float: right;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+#DebugDiv {
+    display: block;
+    text-wrap: normal;
+    position: absolute;
+    top: 15px;
+    left: 400px;
+    width: 700px;
+    height: 30px;
+    background-color: black;
+    color: black;
+}
+
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11pt;
+    background-color: black;
+}
+
+.standardMargin {
+    margin: 15px;
+}
+
+.mediumMargin {
+    margin: 10px;
+}
+
+.smallMargin {
+    margin: 5px;
+}
+
+
+.standardBorder {
+    border: 2px solid @siteSilver;
+}
+
+
+#FrameworkContainer {
+    height: 1000px;
+    width: 1835px;
+    position: absolute;
+    left: 50%;
+    margin-left: -917px;
+    overflow-x: hidden;
+}
+
+/* NAVBAR */
+
+#NavbarContainer {
+    position: relative;
+    background-color: black;
+    height: 40px;
+    width: 1825px;
+}
+
+#NavbarTitleContainer {
+    position: relative;
+    margin-top: 15px;
+    margin-left: 15px;
+    width: 500px;
+}
+
+.navbarLinkContainer {
+    color: silver;
+    font-size: 16pt;
+    float:left;
+    cursor:pointer;
+    margin-right: 30px;
+}
+
+#NavbarShipyardLink{
+    text-decoration: none;
+    color: silver;
+}
+
+/* SHIP SELECTOR */
+
+#ShipContainer {
+    color: silver;
+    left: 0;
+    position: absolute;
+}
+
+.shipSelector {
+    border-radius:20px;
+    float: left;
+    border: solid 2px @siteSilver;
+    width: 320px;
+    cursor: pointer;
+    .transition(all, @transitionTime, ease-in);
+}
+
+.shipSelector:hover {
+    border-color: @siteShipyardFocus;
+    
+}
+
+.shipSelectorDiv {
+    cursor: pointer;
+}
+
+.shipPrice {
+    float: right;
+    color: silver;
+    cursor: pointer;
+}
+
+.selectorGraphicContainer {
+    width: 300px;
+    height: 100px;
+    margin-bottom: -10px;
+}
+
+.selectorGraphicContainerSmall {
+    width: 300px;
+    height: 100px;
+    margin-bottom: -10px;
+}
+
+.manufacturerAvatar {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    width: 150px;
+    height: 84px;
+    cursor: pointer;
+}
+
+.manufacturerAvatarSmall {
+    width: 75px;
+}
+
+.ship3DModel {
+    position: relative;
+    top: -90px;
+    left: 150px;
+    width: 140px;
+    height: 90px;
+    cursor: pointer;
+}
+
+.ship3DModelOffset {
+    margin-left: -75px;
+}
+
+.manufacturerGutamaya {
+    background-image: url("../Graphics/Manufacturer/Gutamaya.jpg");
+}
+
+.manufacturerLakon {
+    background-image: url("../Graphics/Manufacturer/Lakon.jpg");
+}
+
+.manufacturerFaulconDeLacy {
+    background-image: url("../Graphics/Manufacturer/FaulconDeLacy.jpg");
+}
+
+.manufacturerCoreDynamics {
+    background-image: url("../Graphics/Manufacturer/CoreDynamics.jpg");
+}
+
+.manufacturerZorgonPeterson {
+    background-image: url("../Graphics/Manufacturer/ZorgonPeterson.jpg");
+}
+
+.manufacturerSaudKruger {
+    background-image: url("../Graphics/Manufacturer/SaudKruger.jpg");
+}
+
+.shipAdder {
+    background-image: url("../Graphics/Ship/Adder.jpg");
+}
+
+.shipAnaconda {
+    background-image: url("../Graphics/Ship/Anaconda.jpg");
+}
+
+.shipAspExplorer {
+    background-image: url("../Graphics/Ship/AspExplorer.jpg");
+}
+
+.shipCobraMKIII {
+    background-image: url("../Graphics/Ship/CobraMKIII.jpg");
+}
+
+.shipDiamondbackExplorer {
+    background-image: url("../Graphics/Ship/DiamondbackExplorer.jpg");
+}
+
+.shipDiamondbackScout {
+    background-image: url("../Graphics/Ship/DiamondbackScout.jpg");
+}
+
+.shipEagle {
+    background-image: url("../Graphics/Ship/Eagle.jpg");
+}
+
+.shipImperialEagle {
+    background-image: url("../Graphics/Ship/ImperialEagle.jpg");
+}
+
+.shipFederalDropship {
+    background-image: url("../Graphics/Ship/FederalDropship.jpg");
+}
+
+.shipFederalAssaultShip {
+    background-image: url("../Graphics/Ship/FederalAssaultShip.jpg");
+}
+
+.shipFederalGunship {
+    background-image: url("../Graphics/Ship/FederalGunship.jpg");
+}
+
+.shipFederalCorvette {
+    background-image: url("../Graphics/Ship/FederalCorvette.jpg");
+}
+
+.shipFer-de-Lance {
+    background-image: url("../Graphics/Ship/Fer-de-Lance.jpg");
+}
+
+.shipHauler {
+    background-image: url("../Graphics/Ship/Hauler.jpg");
+}
+
+.shipImperialClipper {
+    background-image: url("../Graphics/Ship/ImperialClipper.jpg");
+}
+
+.shipImperialCourier {
+    background-image: url("../Graphics/Ship/ImperialCourier.jpg");
+}
+
+.shipImperialCutter {
+    background-image: url("../Graphics/Ship/ImperialCutter.jpg");
+}
+
+.shipOrca {
+    background-image: url("../Graphics/Ship/Orca.jpg");
+}
+
+.shipPython {
+    background-image: url("../Graphics/Ship/Python.jpg");
+}
+
+.shipSidewinder {
+    background-image: url("../Graphics/Ship/Sidewinder.jpg");
+}
+
+.shipType-6Transporter {
+    background-image: url("../Graphics/Ship/Type-6Transporter.jpg");
+}
+
+.shipType-7Transporter {
+    background-image: url("../Graphics/Ship/Type-7Transporter.jpg");
+}
+
+.shipType-9Heavy {
+    background-image: url("../Graphics/Ship/Type-9Heavy.jpg");
+}
+
+.shipViper {
+    background-image: url("../Graphics/Ship/Viper.jpg");
+}
+
+.shipVulture {
+    background-image: url("../Graphics/Ship/Vulture.jpg");
+}
+
+/* OUTFITTING */
+
+#OutfittingTitle {
+    color: silver;
+    font-size: 16pt;
+    margin-left: 15px;
+}
+
+/* SHIP ATTRIBUTES */
+
+.shipAttributesContainer {
+    width: 1805px;
+    height: 80px;
+}
+
+.shipAttributesHeader1Container {
+    background-color: silver;
+    height: 20px;
+    color: black;
+}
+
+
+.shipAttributesHeader2Container {
+    background-color: silver;
+    height: 25px;
+    color: black;
+}
+
+.shipAttributesDetailContainer {
+    width: 1805px;
+    border-bottom: 1px solid silver;
+    border-left: 1px solid silver;
+    background-color: black;
+    height: 30px;
+    color: silver;
+}
+
+.shipAttribHeaderText {
+    margin-top: 2px;
+    float: left;
+    width: 100px;
+    text-align: center;
+    color: black;
+}
+
+.shipHeaderJump {
+    position: absolute;
+    left: 1191px;
+    width: 150px;
+}
+
+.shipHeaderRange {
+    position: absolute;
+    left: 1489px;
+    width: 150px;
+}
+
+
+.shipAttribContainer {
+    float: left;
+    width: 100px;
+    height: 30px;
+    border-right: 1px solid silver;
+}
+
+.shipAttribText {
+    margin-top: 4px;
+    text-align: center;
+    color: silver;
+}
+
+.shipAttribSize {
+}
+
+.shipAttribAgilityGraphic {
+    background-repeat: no-repeat;
+    height: 17px;
+    width: 50px;
+    margin-left: 21px;
+    margin-top: 8px;
+}
+
+
+
+.shipAttribSpeed {
+}
+
+.shipAttribBoost {
+}
+
+.shipAttribArmour {
+}
+
+.shipAttribShields {
+}
+
+.shipAttribHullMass {
+}
+
+.shipAttribHullMassUnladen {
+}
+
+.shipAttribHullMassLaden {
+}
+
+.shipAttribCargo {
+}
+
+.shipAttribFuel {
+}
+
+.shipAttribJumpRangeMax {
+}
+
+.shipAttribJumpRangeFullTank {
+}
+
+.shipAttribJumpRangeLaden {
+}
+
+.shipAttribTotalRangeJumps {
+}
+
+.shipAttribTotalRangeUnladen {
+}
+
+.shipAttribTotalRangeLaden {
+}
+
+.shipAttribMassLock {
+    text-align: center;
+    width: 104px;
+}
+
+/* SECTIONS CONFIGURATION */
+
+.shipSectionsContainer {
+    width: 1900px; /* +30px to allow for the final margin */
+}
+
+.shipSectionContainer {
+    margin-right: 15px;
+    float: left;
+}
+
+.shipSectionHeaderContainer {
+    margin-right: 15px;
+    margin-bottom: 10px;
+    float: left;
+    width: 440px;
+    height: 30px;
+    background-color: silver;
+}
+
+.shipSectionHeaderText {
+    color: black;
+    text-align: center;
+    margin-top: 4px;
+}
+
+.shipSectionStandard {
+}
+
+.shipSectionInternal {
+}
+
+.shipSectionHardpoint {
+}
+
+.shipSectionUtility {
+}
+
+/* MODULE CONFIGURATION */
+
+/* Absolutely positioned elements are positioned relative to the first positioned parent */
+/* Enabling the children to use absolute positioning within the container*/
+.moduleContainer {
+    position: relative;
+    border: 2px solid;
+    border-color: silver;
+    color: silver;
+    margin-bottom: 10px;
+    width: 440px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.moduleClassContainer {
+    position: absolute;
+    left: 0px;
+    top: -2px; /* Offset for 2px border*/
+    width: 25px;
+    height: 50px;
+    border-right: 2px solid;
+    border-color: silver;
+}
+
+.moduleClassText {
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
+.moduleEmpty {
+    margin-top: 12px;
+    text-align: center;
+    color: #48494d;
+}
+
+.moduleEmptyLarge {
+    margin-top: 22px;
+    text-align: center;
+    color: #48494d;
+}
+
+.moduleLarge {
+    height: 90px;
+}
+
+.moduleMedium {
+    height: 70px;
+}
+
+.moduleStandard {
+    height: 50px;
+}
+
+.moduleDescriptionContainer {
+    position: relative;
+    left: 30px;
+    top: 0px;
+    width: 350px;
+}
+
+.moduleDescriptionText {
+    float: left;
+}
+
+.moduleMassTextBlock {
+    top: 0px;
+    position: absolute;
+    width: 50px;
+    left: 310px;
+    text-align: right;
+}
+
+.moduleAttributeTextInline {
+    float: left;
+    margin-right: 15px;
+}
+
+.moduleAttributeTextBlock {
+    margin-right: 5px;
+}
+
+.moduleWeaponGraphicalAttribute {
+    float: left;
+    margin-right: 5px;
+}
+
+
+.moduleRatingGraphic {
+    width: 51px;
+    height: 14px;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.moduleRatingGraphic1 {
+    background-image: url("../Graphics/Rating/1.jpg");
+}
+
+.moduleRatingGraphic2 {
+    background-image: url("../Graphics/Rating/2.jpg");
+}
+
+.moduleRatingGraphic3 {
+    background-image: url("../Graphics/Rating/3.jpg");
+}
+
+.moduleRatingGraphic4 {
+    background-image: url("../Graphics/Rating/4.jpg");
+}
+
+.moduleRatingGraphic5 {
+    background-image: url("../Graphics/Rating/5.jpg");
+}
+
+.moduleRatingGraphic6 {
+    background-image: url("../Graphics/Rating/6.jpg");
+}
+
+.moduleRatingGraphic7 {
+    background-image: url("../Graphics/Rating/7.jpg");
+}
+
+.moduleRatingGraphic8 {
+    background-image: url("../Graphics/Rating/8.jpg");
+}
+
+.moduleRatingGraphic9 {
+    background-image: url("../Graphics/Rating/9.jpg");
+}
+
+.moduleRatingGraphic10 {
+    background-image: url("../Graphics/Rating/10.jpg");
+}
+
+.weaponMount {
+    float: left;
+    width: 25px;
+    height: 20px;
+}
+
+.weaponMountG {
+    background-image: url("../Graphics/WeaponMount/Gimbal.jpg");
+}
+
+.weaponMountF {
+    background-image: url("../Graphics/WeaponMount/Fixed.jpg");
+}
+
+.weaponMountT {
+    background-image: url("../Graphics/WeaponMount/Turret.jpg");
+}
+
+.weaponMountFocusG {
+    background-image: url("../Graphics/WeaponMount/GimbalFocus.jpg");
+}
+
+.weaponMountFocusF {
+    background-image: url("../Graphics/WeaponMount/FixedFocus.jpg");
+}
+
+.weaponMountFocusT {
+    background-image: url("../Graphics/WeaponMount/TurretFocus.jpg");
+}
+
+
+
+.moduleSelectorItemPanel {
+    visibility: hidden;
+    left: 0;
+    top: 0;
+    width: 215px;
+    position: absolute;
+    background-color: black;
+    color: silver;
+    border: solid 2px silver;
+    z-index: 1001;
+    padding-bottom: 10px;
+}
+
+
+.moduleSelectorItemPanelWeaponOffset {
+    width: 210px;
+}
+
+.moduleSelectorItemPanelBulkheadsOffset {
+    width: 275px;
+}
+
+.moduleSelectorItemPanelExplorationScannerOffset {
+    width: 285px;
+}
+
+.moduleSelectorGroupPanel {
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    background-color: black;
+    color: silver;
+    border-top: solid 2px silver;
+    border-left: solid 2px silver;
+    border-bottom: none;
+    border-right: solid 2px silver;
+    width: 440px;
+    z-index: 1000;
+}
+
+/* Apply highlight to all div elements within container on hover event*/
+.moduleSelectorTypeContainer:hover > div {
+    color: rgba(134, 204, 106, 1);
+}
+
+
+.moduleSelectorTypeContainer {
+    cursor: pointer;
+    width: 436px;
+    height: 27px;
+    background-color: black;
+    color: silver;
+    border-bottom: 2px solid silver;
+}
+
+.moduleSelectorTypeText {
+    float: left;
+    cursor: pointer;
+    width: 350px;
+    background-color: black;
+    color: silver;
+    margin-top: 1px;
+}
+
+.moduleSelectorTypeGraphic {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+}
+
+.moduleSelectorGraphicArmour {
+    background-image: url("../Graphics/Module/Armour.jpg");
+}
+
+.moduleSelectorGraphicChaff {
+    background-image: url("../Graphics/Module/Chaff.jpg");
+}
+
+.moduleSelectorGraphicEcm {
+    background-image: url("../Graphics/Module/Ecm.jpg");
+}
+
+.moduleSelectorGraphicHeatsink {
+    background-image: url("../Graphics/Module/Heatsink.jpg");
+}
+
+.moduleSelectorGraphicKinetic {
+    background-image: url("../Graphics/Module/Kinetic.jpg");
+}
+
+.moduleSelectorGraphicLaser {
+    background-image: url("../Graphics/Module/Laser.jpg");
+}
+
+.moduleSelectorGraphicMiningLaser {
+    background-image: url("../Graphics/Module/MiningLaser.jpg");
+}
+
+.moduleSelectorGraphicMissile {
+    background-image: url("../Graphics/Module/Missile.jpg");
+}
+
+.moduleSelectorGraphicScanner {
+    background-image: url("../Graphics/Module/Scanner.jpg");
+}
+
+.moduleSelectorGraphicScrewdriver {
+    background-image: url("../Graphics/Module/Screwdriver.jpg");
+}
+
+.moduleSelectorGraphicStandard {
+    background-image: url("../Graphics/Module/Standard.jpg");
+}
+
+.focusHighlight {
+    color: rgba(134, 204, 106, 1);
+}
+
+.shipLink {
+   
+}
+
+.moduleSelectorItemContainer {
+    border: 1px solid silver;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.moduleSelectorWeaponContainer {
+    border: 1px solid silver;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    width: 55px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.moduleSelectorBulkheadsContainer {
+    border: 1px solid silver;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    width: 250px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.modulePriceContainer {
+    border:1px solid rgba(134, 204, 106, 1);
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    height: 30px;
+}
+
+.modulePriceContainerStandard {
+    width: 190px;
+}
+
+.modulePriceContainerWeapon {
+    width: 185px;
+}
+
+.modulePriceContainerBulkheads {
+   width: 250px;
+}
+
+.moduleSelectorExplorationScannerContainer {
+    border: 1px solid silver;
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    width: 260px;
+    height: 30px;
+    cursor: pointer;
+}
+
+
+    .moduleSelectorItemContainer:hover, .moduleSelectorWeaponContainer:hover, .moduleSelectorBulkheadsContainer:hover, .moduleSelectorExplorationScannerContainer:hover {
+        color: rgba(134, 204, 106, 1);
+        border: 1px solid rgba(134, 204, 106, 1);
+    }
+
+.moduleSelectorItemText {
+    text-align: center;
+    margin-top: 3px;
+}
+
+.moduleSelectorItemHeading {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.moduleSelectorItemPadding {
+    float: left;
+    margin-top: 15px;
+    width: 15px;
+    height: 15px;
+}
+
+.topMargin {
+    margin-top: 10px;
+}
+
+.topMarginSmall {
+    margin-top: 3px;
+}
+
+.addPointer {
+    cursor: pointer;
+}
+
+.modulePriceLabel {
+    font-weight:normal;
+    color:rgba(134, 204, 106, 1);
+}
+
+.modulePowerContainer {
+    width: 35px;
+    border-left: 2px solid silver;
+    top: -2px;
+    left: 400px;
+    position: absolute;
+    text-align: center;
+}
+
+.modulePowerCheckboxContainer {
+}
+
+.modulePowerCheckbox {
+    cursor: pointer;
+}
+
+.modulePowerText {
+    font-size: 9pt;
+}
+
+/* For weapons with special description such as "Imperial Hammer" */
+.moduleSelectorPowerplayWeaponContainer {
+    width: 185px;
+}
+
+/* POWER METRICS */
+.powerMetricsContainer {
+    margin-top: 10px;
+    width: 440px;
+    color: silver;
+}
+
+.powerMetricsLeftCell {
+    text-align: center;
+    border-right: solid 2px silver;
+    height: 85px;
+    width: 25px;
+    float: left;
+}
+
+.powerMetricsLeftCellText {
+    margin-top: 5px;
+}
+
+.powerMetricsRightCell {
+    border-left: solid 2px silver;
+    height: 85px;
+    width: 35px;
+    float: right;
+}
+
+.powerMetricsTotalLabel, .powerMetricsAvailableLabel, .powerMetricsConsumedLabel {
+    margin-left: 5px;
+}
+
+.powerMetricsTotalText, .powerMetricsConsumedText, .powerMetricsAvailableText {
+    float: right;
+    margin-right: 10px;
+}
+
+.powerMetricsGoodHighlight {
+    color: rgba(134, 204, 106, 1);
+}
+
+.powerMetricsBadHighlight {
+    color: red;
+}
+
+
+/* PRICE METRICS */
+.priceMetricsContainer {
+    margin-top: 10px;
+    width: 440px;
+    color: silver;
+}
+
+.priceMetricsLeftCell {
+    text-align: center;
+    border-right: solid 2px silver;
+    height: 58px;
+    width: 25px;
+    float: left;
+}
+
+.priceMetricsLeftCellText {
+    margin-top: 5px;
+}
+
+.priceMetricsRightCell {
+    border-left: solid 2px silver;
+    width: 35px;
+    height: 58px;
+    float: right;
+}
+
+.priceMetricsTotalLabel, .priceMetricsRebuyLabel {
+    margin-left: 5px;
+}
+
+.priceMetricsTotalText, .priceMetricsRebuyText {
+    float: right;
+    margin-right: 10px;
+}
+
+
+.cargoHatchContainer {
+    position: relative;
+    margin-top: 0px;
+    /* margin-right:100px; */
+    width: 440px;
+    color: silver;
+    /*float:right; */
+}
+
+
+/* TOOLBAR */
+
+.buttonChart{
+    background-image: url("../Graphics/Buttons/Chart.jpg");
+}
+
+.buttonDefault {
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+    top: 0px;
+    float: right;
+    margin-left: 20px;
+}
+
+.buttonCopy {
+    background-image: url("../Graphics/Buttons/CopyNuSkool.jpg");
+}
+
+.buttonSave {
+    background-image: url("../Graphics/Buttons/SaveOldskool.jpg");
+}
+
+.buttonDelete {
+    background-image: url("../Graphics/Buttons/Delete.jpg");
+}
+
+.buttonReload {
+    background-image: url("../Graphics/Buttons/Reload.jpg");
+}
+
+.buildText {
+    float: right;
+    width: 300px;
+    height: 29px;
+    background-color: black;
+    color: silver;
+    margin-top: 6px;
+    margin-right: 30px;
+}
+
+.toolbarContainer {
+    margin-top: 15px;
+    float: right;
+    width: 800px;
+    height: 30px;
+    background-color: black;
+    color: silver;
+    visibility: hidden;
+}
+
+
+/* SETTINGS */
+
+.settingsPanel {
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+    width: 250px;
+    height:110px;
+    position: absolute;
+    background-color: black;
+    color: silver;
+    border: solid 2px silver;
+    z-index: 1001;
+}
+
+.settingsLabel {
+    font-weight:normal;
+}
+
+.settingsContainer{
+    width:200px;
+    margin:20px; 
+
+}
+
+.settingsCheckbox {
+    margin-left:20px;
+    float:right;
+}
+
+
+/* HANGAR */
+
+.hangarPanel {
+    visibility: hidden;
+    left: 0px;
+    top: 0px;
+    width: 300px;
+    position: absolute;
+    background-color: black;
+    color: silver;
+    border: solid 2px silver;
+    z-index: 1001;
+    padding-bottom: 10px;
+}
+
+.hangarShipContainer {
+    margin-top:10px;
+    width:380px;
+}
+
+.hangarShipContainer:hover {
+    color:rgba(134, 204, 106, 1); /* green */
+}
+
+.hangarShipItem {
+    text-decoration:none;
+}
+
+.hangarShipItem:hover {
+    text-decoration:none;
+    /*color:rgba(134, 204, 106, 1);  green */ 
+    color:white;
+}
+
+.hangarShipHeadingText {
+    text-decoration:none;
+    margin-left: 10px;
+    color: rgb(51, 122, 183); /* blue */ 
+    
+}
+
+.hangarShipHeadingText:hover {
+    text-decoration:none;
+}
+
+.hangarShipItemText {
+    text-decoration:none;
+    margin-left:20px;
+    color:silver;
+}
+
+.shipLink:hover {
+    text-decoration:none;
+    color: rgb(51, 122, 183); /* blue */
+}

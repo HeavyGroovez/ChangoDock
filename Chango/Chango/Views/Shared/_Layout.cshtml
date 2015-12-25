@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chango Dock</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="~/Graphics/Chango.ico">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryajax")
+    @Scripts.Render("~/bundles/chango")
+
+    @RenderSection("scripts", required: false)
+    <script src="~/Glimpse/Resource/?resource=Pager"></script> <!-- Glimpse plugin -->
+</head>
+<body>
+    <div id="FrameworkContainer">
+        <div id="ModuleSelectorGroupPanel" class="moduleSelectorGroupPanel"></div>
+        <div id="ModuleSelectorItemPanel" class="moduleSelectorItemPanel"></div>
+        <div id="HangarPanel" class="hangarPanel"></div>
+        <div id="SettingsPanel" class="settingsPanel">
+            <div class="settingsContainer">
+                <input class="settingsCheckbox" id="SiriusDiscount" type="checkbox" />
+                <label class="settingsLabel">Sirius Discount</label>
+            </div>
+            <div class="settingsContainer">
+                <input class="settingsCheckbox" id="ShowModulePrices" type="checkbox" />
+                <label class="settingsLabel">Show Module Prices</label>
+            </div>
+        </div>
+        <div id="NavbarContainer">
+            <div id="Toolbar" class="toolbarContainer">
+                <div id="ButtonChart" class="buttonChart buttonDefault"></div>
+                <div id="ButtonDelete" class="buttonDelete buttonDefault"></div>
+                <div id="ButtonReload" class="buttonReload buttonDefault"></div>
+                <div id="ButtonCopy" class="buttonCopy buttonDefault"></div>
+                <div id="ButtonSave" class="buttonSave buttonDefault"></div>
+                <div id="Result"></div>
+                <input id="BuildText" class="buildText standardBorder" value="Enter Build Name..." tabindex="0" />
+            </div>
+            <div id="NavbarTitleContainer">
+                <div class="navbarLinkContainer"><a id="NavbarShipyardLink" class="navbarLink" href="@Url.Action("Index","Ship")">SHIPYARD</a></div>
+                <div id="NavbarHangarLink" class="navbarLinkContainer">HANGAR</div>
+                <div id="NavbarSettingsLink" class="navbarLinkContainer">SETTINGS</div>
+                <div id="DebugDiv"></div>
+            </div>
+            
+        </div>
+        @RenderBody()     
+    </div>
+</body>
+</html>
+<script>
+    // We do not have access to the HTML Helpers within .js files
+    var hangarUrl = '@Url.Action("Hangar","Ship")';
+    var loadSettingsUrl = '@Url.Action("LoadSettings","Ship")';
+    var saveSettingsUrl = '@Url.Action("SaveSettings","Ship")';
+    var deleteUrl = '@Url.Action("DeleteBuild","Ship")';
+    var saveUrl = '@Url.Action("SaveBuild","Ship")';
+    var saveJsonUrl = '@Url.Action("SaveBuildJson","Ship")';
+    var moduleUrl = '@Url.Action("Module","Ship")';
+    var groupUrl = '@Url.Action("ModuleSelectorGroup","Ship")';
+    var itemUrl = '@Url.Action("ModuleSelectorItem","Ship")';
+    debug = '#DebugDiv';
+</script>

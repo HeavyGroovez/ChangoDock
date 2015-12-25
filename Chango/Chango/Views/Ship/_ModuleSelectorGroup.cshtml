@@ -1,0 +1,68 @@
+﻿@using Chango.Models;
+@using Chango.Helpers;
+
+@{
+    <div id='ModuleSelectorTypeContainerEmpty' class="moduleSelectorTypeContainer"
+         data-ship="@ViewBag.ShipName"
+         data-section="@ViewBag.SectionName"
+         data-configid="0"
+         data-moduleclass=@ViewBag.ModuleClass
+         data-moduletype='Empty'
+         data-shipmass=@ViewBag.ShipMass>
+
+        <div class='addPointer moduleSelectorTypeGraphic'></div>
+        <div class="moduleSelectorTypeText">EMPTY</div>
+    </div>
+
+    foreach (string moduleGroup in ViewBag.ModuleGroups)
+    {
+        string moduleTypeGraphicStyle = "addPointer moduleSelectorTypeGraphic " + Css.GetModuleTypeSelectorStyle(moduleGroup);
+
+        // Unique id for the container
+        string containerID = "ModuleSelectorTypeContainer" + moduleGroup.Replace(" ", "");
+
+
+        // Utility groups with only 1 item need to have a module ID assigned so that we can select them from the group selector
+        if (moduleGroup == "Chaff Launcher" ||
+            moduleGroup == "Electronic Countermeasure" ||
+            moduleGroup == "Point Defence" ||
+            moduleGroup == "Heat Sink Launcher")
+        {
+            // Get the id from the Utilites list
+            List<Module> utils = (List<Module>)ViewBag.Utilities;
+            int utilityID = utils.Find(m => m.Type == moduleGroup).ID;
+                
+            <div id='@containerID' class="moduleSelectorTypeContainer"
+                 data-ship='@ViewBag.ShipName'
+                 data-section='@ViewBag.SectionName'
+                 data-configid=@ViewBag.ConfigID
+                 data-moduleclass=@ViewBag.ModuleClass
+                 data-moduletype='@moduleGroup'
+                 data-moduleid='@utilityID'>
+                 
+
+                <div class='@moduleTypeGraphicStyle'></div>
+                <div class="moduleSelectorTypeText">@moduleGroup</div>
+            </div>
+        }
+        else
+        {
+            <div id='@containerID' class="moduleSelectorTypeContainer"
+                 data-ship="@ViewBag.ShipName"
+                 data-section="@ViewBag.SectionName"
+                 data-configid=@ViewBag.ConfigID
+                 data-moduleclass=@ViewBag.ModuleClass
+                 data-moduletype='@moduleGroup'>
+
+                <div class='@moduleTypeGraphicStyle'></div>
+                <div class="moduleSelectorTypeText">@moduleGroup</div>
+            </div>
+        }
+    }
+}
+<script>
+    bindModuleSelectorGroupEventHandlers();
+</script>    
+
+
+
