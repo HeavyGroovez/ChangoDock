@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\groover\documents\visual studio 2013\Projects\Chango\Chango\Models\Elite.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\groover\Documents\GitHub\ChangoDock\Chango\Chango\Models\EliteContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

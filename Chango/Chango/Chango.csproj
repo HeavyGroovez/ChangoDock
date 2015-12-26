@@ -17,10 +17,11 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,8 +63,8 @@
       <HintPath>..\packages\Glimpse.Mvc5.1.5.3\lib\net45\Glimpse.Mvc5.dll</HintPath>
     </Reference>
     <Reference Include="Meta.Numerics, Version=3.0.0.0, Culture=neutral, PublicKeyToken=67d25c65a6631347, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Meta.Numerics\Meta.Numerics.dll</HintPath>
+      <HintPath>..\packages\Meta.Numerics.3.0.0\lib\Meta.Numerics.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RouteDebugger">
@@ -156,44 +157,44 @@
     <Compile Include="Models\Build.cs" />
     <Compile Include="Models\BuildViewModel.cs" />
     <Compile Include="Models\Commander.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Elite.Context.cs">
+    <Compile Include="Models\EliteContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Elite.Context.tt</DependentUpon>
+      <DependentUpon>EliteContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Elite.cs">
+    <Compile Include="Models\EliteContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Elite.Designer.cs">
+    <Compile Include="Models\EliteContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Elite.edmx</DependentUpon>
+      <DependentUpon>EliteContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\HangarViewModel.cs" />
     <Compile Include="Models\Module.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ModuleEx.cs" />
     <Compile Include="Models\OutfittingViewModel.cs" />
     <Compile Include="Models\SelectShipBuilds_Result.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Ship.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShipBuild.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShipModuleBuild.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShipModuleConfiguration.cs">
-      <DependentUpon>Elite.tt</DependentUpon>
+      <DependentUpon>EliteContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -209,12 +210,15 @@
     <Content Include="Content\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
-    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css.map">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Content\Site.less" />
     <Content Include="Graphics\Buttons\Chart.jpg" />
     <Content Include="Graphics\Buttons\CopyNuSkool.jpg" />
@@ -287,24 +291,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <EntityDeploy Include="Models\Elite.edmx">
+    <EntityDeploy Include="Models\EliteContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Elite.Designer.cs</LastGenOutput>
+      <LastGenOutput>EliteContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Elite.edmx.diagram">
-      <DependentUpon>Elite.edmx</DependentUpon>
-      <SubType>Designer</SubType>
+    <Content Include="Models\EliteContext.edmx.diagram">
+      <DependentUpon>EliteContext.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Models\Elite.Context.tt">
+    <Content Include="Models\EliteContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Elite.edmx</DependentUpon>
-      <LastGenOutput>Elite.Context.cs</LastGenOutput>
+      <DependentUpon>EliteContext.edmx</DependentUpon>
+      <LastGenOutput>EliteContext.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Elite.tt">
+    <Content Include="Models\EliteContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Elite.edmx</DependentUpon>
-      <LastGenOutput>Elite.cs</LastGenOutput>
+      <DependentUpon>EliteContext.edmx</DependentUpon>
+      <LastGenOutput>EliteContext.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

@@ -14,6 +14,7 @@ namespace Chango.Models
     
     public partial class ShipModuleConfiguration
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ShipModuleConfiguration()
         {
             this.ShipModuleBuild = new HashSet<ShipModuleBuild>();
@@ -27,6 +28,7 @@ namespace Chango.Models
         public int OrderID { get; set; }
     
         public virtual Ship Ship { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipModuleBuild> ShipModuleBuild { get; set; }
     }
 }

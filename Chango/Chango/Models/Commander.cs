@@ -14,6 +14,7 @@ namespace Chango.Models
     
     public partial class Commander
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Commander()
         {
             this.ShipBuild = new HashSet<ShipBuild>();
@@ -25,6 +26,7 @@ namespace Chango.Models
         public bool SiriusDiscount { get; set; }
         public bool ShowModulePrices { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipBuild> ShipBuild { get; set; }
     }
 }

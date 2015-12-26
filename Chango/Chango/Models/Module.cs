@@ -14,6 +14,7 @@ namespace Chango.Models
     
     public partial class Module
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Module()
         {
             this.ShipModuleBuild = new HashSet<ShipModuleBuild>();
@@ -26,6 +27,8 @@ namespace Chango.Models
         public string Name { get; set; }
         public int Class { get; set; }
         public string Rating { get; set; }
+        public Nullable<double> M { get; set; }
+        public Nullable<double> P { get; set; }
         public string Attributes { get; set; }
         public Nullable<double> FuelMultiplier { get; set; }
         public Nullable<double> FuelPower { get; set; }
@@ -50,9 +53,8 @@ namespace Chango.Models
         public Nullable<double> MaxMultiplier { get; set; }
         public Nullable<int> Armour { get; set; }
         public Nullable<double> ScoopRate { get; set; }
-        public Nullable<double> M { get; set; }
-        public Nullable<double> P { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShipModuleBuild> ShipModuleBuild { get; set; }
     }
 }

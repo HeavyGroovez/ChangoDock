@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Commander">
           <Key>
             <PropertyRef Name="Name" />
@@ -207,7 +207,8 @@
             <End Role="ShipModuleConfiguration" EntitySet="ShipModuleConfiguration" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -233,6 +234,8 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Class" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="M" Type="Double" />
+          <Property Name="P" Type="Double" />
           <Property Name="Attributes" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="FuelMultiplier" Type="Double" />
           <Property Name="FuelPower" Type="Double" />
@@ -258,8 +261,6 @@
           <Property Name="Armour" Type="Int32" />
           <Property Name="ScoopRate" Type="Double" />
           <NavigationProperty Name="ShipModuleBuild" Relationship="Self.FK_ShipModuleBuild_Module" FromRole="Module" ToRole="ShipModuleBuild" />
-          <Property Name="M" Type="Double" />
-          <Property Name="P" Type="Double" />
         </EntityType>
         <EntityType Name="Ship">
           <Key>
@@ -390,7 +391,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="EliteContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Commander" EntityType="Self.Commander" />
           <EntitySet Name="Module" EntityType="Self.Module" />
           <EntitySet Name="Ship" EntityType="Self.Ship" />
@@ -422,7 +423,7 @@
             <End Role="ShipModuleBuild" EntitySet="ShipModuleBuild" />
           </AssociationSet>
           <FunctionImport Name="SelectShipBuilds" ReturnType="Collection(Models.SelectShipBuilds_Result)">
-          <Parameter Name="ShipName" Mode="In" Type="String" />
+            <Parameter Name="ShipName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="SelectShipBuilds_Result">
@@ -436,7 +437,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="EliteContext">
           <EntitySetMapping Name="Commander">
             <EntityTypeMapping TypeName="Models.Commander">
               <MappingFragment StoreEntitySet="Commander">
@@ -451,8 +452,6 @@
           <EntitySetMapping Name="Module">
             <EntityTypeMapping TypeName="Models.Module">
               <MappingFragment StoreEntitySet="Module">
-                <ScalarProperty Name="P" ColumnName="P" />
-                <ScalarProperty Name="M" ColumnName="M" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ShipSpecific" ColumnName="ShipSpecific" />
                 <ScalarProperty Name="Section" ColumnName="Section" />
@@ -460,6 +459,8 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Class" ColumnName="Class" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="M" ColumnName="M" />
+                <ScalarProperty Name="P" ColumnName="P" />
                 <ScalarProperty Name="Attributes" ColumnName="Attributes" />
                 <ScalarProperty Name="FuelMultiplier" ColumnName="FuelMultiplier" />
                 <ScalarProperty Name="FuelPower" ColumnName="FuelPower" />
